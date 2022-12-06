@@ -1,0 +1,60 @@
+man //command// -> manualul de utilizzare
+$ man 1 write
+$ man 2 write  <=> corespunde syscall-ului write(2)
+
+pwd -> directorul curent
+$ pwd 
+/home/bb/Desktop/lab1
+
+ls -> continutul directorului curent
+$ ls
+foo baz hello.c hello .....
+
+cp source target -> copiere din fisierul source in fisierul target
+$cp foo bar
+
+mv source target -> mutare fisiere
+$mv bar baz
+
+rm item -> stergere fisier(remove)
+$ rm vaz
+
+mkdir dir -> creare director(make dir)
+$ mkdir test
+
+cd path -> schimba directorul curent
+$ cd test/
+$ cd .. -> revenim directorul parinte 
+. -> directorul curent
+
+rmdir dir -> stergere director gol
+$ rmdir test
+
+echo string -> repetare string
+$ echo hello
+hello
+
+> ->redirectionare iesire catre fisier
+
+$ cat hello.txt -> concatenate( output-ul va fi continutul fisierului)
+hello
+
+Pentru executarea unui binar
+$ gcc hello.c -o hello
+$ ./hello
+......
+$ ktrace ./hello //////////// $strace ./hello(pentru linux)
+- ne arata de ce functii de sistem are nevoie hello pentru a fi executat
+
+$ldd ./hello
+-> de ce biblioteci are nevoie hello pentru a fi executat
+
+$ nm ./hello
+-> de ce simboluri are nevoie hello
+
+$ gdb ./hello  -> debugger-ul
+b main -> breakpoint la main) la o adresa de memorie)
+r   -> run
+c   -> continue
+n   -> next
+q   -> quit
