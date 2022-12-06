@@ -1,0 +1,20 @@
+$ man 2 <syscall>	-> pentru a vedea manualul lor si cum sunt definite
+ex: man 2 write, man 2 open, man 2 read, man 2 close
+
+read(2) -> citeste dintr-un descriptor d in bufferul buf un anumit nr de bytes)
+ssize_t read(int d, void *buf, size_t nbytes);
+-> iesirea functie este nr de bytes cititi
+-- similar write
+
+open(2) -> deschide fisierul dat ca parametru(path), conform argumentului flags
+int open(const char *path, int flgas,...);
+-> iesirea fct este descriptorul asociat
+
+flags: O_RDONLY, O_WRONLY, O_RDWR(reading and writing), O_CREAT(+drepturi acces)
+
+close(2)
+
+stat(2)- informatii despre fisiere( permisiuni, ultima modificare, dimensiune disc...)
+
+Tratarea erorilor
+-daca iesirea fct read/write/... < 0  => perror, errno
