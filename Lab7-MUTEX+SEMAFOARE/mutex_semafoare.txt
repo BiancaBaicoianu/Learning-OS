@@ -1,0 +1,37 @@
+Zona critica = zona in care are voie un singur proces/thread
+MUTEX(MUTual EXclusive) = asigura accesul exclusiv intr-o zona critica
+
+pthread_mutex_init(3) = creare obiect de tip mutex
+int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
+-initializa un mutex cu attr(default NULL)
+- declarare globala pthread_mutex_t mtx;
+
+STARI: 
+- locked -> thread-ul detine dreptul exclusiv de executie asupra zonei critice
+		pthread_mutex_lock(&mtx) - pentru a-l inchide
+			! nu se termina de executat pana nu obtine mutexul, blocand firul de esecutie
+
+- unlocked 
+		pthread_mutex_unlocked(&mtx)
+
+pthread_mutex_destroy(&mtx); - eliberam zona ocupata
+
+
+SEMAFOARE «=» obiecte de tip mutex, dar mai complexe
+- variabila S initialializata cu un int; manipulata cu wait, post(signal)
+- conditie: fct sa se execute fara intrerupere
+
+! Mutex este semafor cu S = 1
+
+sem_init(3) -> initializare semafoare
+int sem_init(sem_t *sem, int pshared, unsigned int value);
+- seteaza sem cu S = value
+- pshared semnaleaza daca folosim semaforul in mai multe procese (pshared=0 default)
+
+sem_wait(3) -> scade valoarea lui S cu o unitate
+! Daca S = 0, fct asteapta ca valoarea sa creasca, blocand firul apelant
+
+sem_post(3) -> creste valoarea lui S
+- dupa incrementare, verifica daca sunt thread-uri blocate, elibereaza thread-uri pe principiul fifo( cel ce asteapta de cel mai mult timp)
+
+sem_destroy(3) - eliberarea semafor
