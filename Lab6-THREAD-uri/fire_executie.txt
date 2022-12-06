@@ -1,0 +1,20 @@
+THREAD
+- comparativ cu procesul-copil, orice modificare facuta intr-un thread, este disponibila si celorlaltor thread-uri
+- impart aceeasi memorie, stare
+- folosesc acelasi spatiu de adresare
+- spre deosebire de fork(), un thread nou porneste executia de la o functie data
+
+pthread_create(3)
+int pthread_create(pthread *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);
+pthread_create(adresa thr, atribut implicit(NULL), functia de executat, arg fct de executat)
+
+pthread_join(3)
+int pthread_join(pthread_t thread, void **value_ptr);
+pthread_join(thread, &value_ptr)
+-asteapta finalizarea executiei unui thread(ca un wait)
+- diferit de wait, asteapta explicit firul de executie din var thread
+- daca vallue_ptr != NULL, pthread_join pune la adresa rezultatul fct start_routine)( in cazul nostru e fct de reverse)
+
+Pentru ex2, folosim un vector de thread-uri
+
+!!! compilam : cc strrev.c -o strrev -pthread
