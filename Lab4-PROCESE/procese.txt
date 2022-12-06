@@ -1,0 +1,24 @@
+fork(2) -> syscall cu care se creeaza procese noi
+->creeaza un proces-copil ca o copie a procesului parinte, dar cu urmatoarele diferente:
+		->procesul-copil are ca parinte procesul care a apelat fork(2)
+		->pid_copil != pid_parinte
+		->procesul-copil are un singur thread
+		->procesul-copil porneste de la 0 in ce priveste resursele utilizate, timpul de executie, gestionarea proceselor
+Daca
+	pid(rezultat in urma fork()) < 0		-> nu s-a putut crea copilul
+				    == 0		-> copil
+				     > 0		-> parinte
+
+getpid(2) <=> pid copil
+getppid(2) <=> pid parinte
+
+WAIT(2) = parintele isi suspenda activitatea pentru a astepta finalizarea executiei unui proces copil
+	-> returneaza pid-ul copilului
+	-> la final reda control parintelui dupa executia copiilor
+
+EXECVE(2) = suprascrie procesul apelant cu un nou proces(path)
+	! which pwd = aflam calea absoluta
+	- execve revine in programul initial doar daca apare o eroare(errno)
+int execve(const char *path, char *const argv[], char *const envp[]);
+envs = variabilele de sistem din mediul de executie
+argv = {calea_basoluta, NULL}
