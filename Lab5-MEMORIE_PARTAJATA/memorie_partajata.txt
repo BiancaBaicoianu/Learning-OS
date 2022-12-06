@@ -1,0 +1,33 @@
+MEMORIE PARTAJATA
+
+CREARE
+- int shm_open(const char *path, int flags, mode_t mode);
+ex: shm_fd = shm_open(shm_name, O_CREAT|O_RDWR, S_IRUSR|S_IWUSR)
+-> obiectul shm_name este creat daca nu exista, pentru read/write si ofera drepturi doar utilizatorului owner
+-> rezultatul este un descriptor
+
+ftruncate(2) -> definim dimensiunea
+ftruncate(shm_fd, shm_size)
+
+shm_unlink(3) -> sterge obiectele create cu shm_open(3)
+shm_unlink(shm_name)
+
+mmap(2) -> incarca memoria partajata in spatiul procesului
+void *mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset);
+-> addr - adresa la care se incarca un proces( 0 default)
+-> len - dimensiunea memoriei partajate
+-> prot - tipuri acces(PROT_READ/PROT_WRITE)
+-> flags - tipul de memorie(MAP_SHARED)
+-> fd - descrriptorul obiectului de memorie
+-> offset - locul de la care sa fie incarcat 
+		-> rezultatul este un pointer catre adresa la care a fost incarcat obiectul
+		-> altfel MAP_FAILED
+ex: shm_ptr = mmap(0, 100, PROT_WRITE, MAP_SHARED, shm_fd, 500)
+-> indica catre o parte de 100 bytes care incepe de la byte-ul 500 din zona de memorie shm_fd ce va fi PROT_WRITE, impartita cu restul proceselor(MAP_SHARED)
+
+
+munmap(2) -> eliberarea zonei de memorie
+int munmap(void *addr, size_t len)
+
+ 
+! dimensiunea se obtine cu page_size sau getpagesize(2)
